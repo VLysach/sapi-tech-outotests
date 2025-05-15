@@ -13,21 +13,20 @@ class ContactsPage(BasePage):
         'Agreement':         "label:has-text('I have read and agree to the Privacy Policy') >> input[type='checkbox']",
         'Marketing':         "label:has-text('I agree that SAPIENS TECH may send me marketing materials') >> input[type='checkbox']",
     }
+
     def open(self) -> None:
         self.open_url("https://sapi-tech.com/en/contacts")
 
-    def is_field_empty(self, field_label: str) -> bool:                    # Перевірити, що поля не заповнені
+    def is_field_empty(self, field_label: str) -> bool:
         selector = self._fields.get(field_label)
         if not selector:
-            raise ValueError(f"Немає поля з назвою '{field_label}'")
+            raise ValueError(f"Немає поля '{field_label}'")
         el = self.find_element(selector)
         return el.input_value() == ''
 
-    def is_checkbox_unchecked(self, label: str) -> bool:                   # Перевірити, що чекбокс не встановлений
+    def is_checkbox_unchecked(self, label: str) -> bool:
         selector = self._checkboxes.get(label)
         if not selector:
-            raise ValueError(f"Немає чекбоксу з назвою '{label}'")
-        # дочекатися появи чекбоксу
+            raise ValueError(f"Немає чекбоксу '{label}'")
         self.find_element(selector)
-        # перевіряємо його стан через метод із BasePage
         return not self.is_checked(selector)

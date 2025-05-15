@@ -13,17 +13,16 @@ class LandingPage(BasePage):
     def open(self) -> None:
         self.open_url("https://sapi-tech.com/en")
 
-    def is_nav_item_visible(self, label: str) -> bool:         #Перевірити, що пункт навігації з текстом label видно
+    def is_nav_item_visible(self, label: str) -> bool:
         selector = self._nav_items.get(label)
         if not selector:
-            raise ValueError(f"Нет пункту навігації з назвою {label}")
+            raise ValueError(f"Немає пункту '{label}' у навігації")
         return self.find_element(selector).is_visible()
 
-    def get_page_title(self) -> str:                           #Повернути заголовок сторінки
-
+    def get_page_title(self) -> str:
         return self.page.title()
 
-    def is_text_present(self, text: str) -> bool:              #Перевірити, що на сторінці присутній заданий текст
+    def is_text_present(self, text: str) -> bool:
         try:
             self.page.wait_for_selector(f"text={text}", timeout=self.timeout)
             return True
