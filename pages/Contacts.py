@@ -1,9 +1,6 @@
 from pages.base_page import BasePage
 
 class ContactsPage(BasePage):
-    """Page Object для сторінки Contacts Sapi Tech"""
-
-    # селектори полів форми контакту
     _fields = {
         'Name':                    '//*[@id="67436a98430a513bbcc95f05-e11f5daa-c3e3-43cc-a0e2-9a7083f4504e"]',
         'Your phone number':       '//*[@id="67436a98430a513bbcc95f05-contactForm_phoneNumber"]',
@@ -19,15 +16,14 @@ class ContactsPage(BasePage):
     def open(self) -> None:
         self.open_url("https://sapi-tech.com/en/contacts")
 
-    def is_field_empty(self, field_label: str) -> bool:
+    def is_field_empty(self, field_label: str) -> bool:                    # Перевірити, що поля не заповнені
         selector = self._fields.get(field_label)
         if not selector:
             raise ValueError(f"Немає поля з назвою '{field_label}'")
         el = self.find_element(selector)
         return el.input_value() == ''
 
-    def is_checkbox_unchecked(self, label: str) -> bool:
-        """Перевірити, що чекбокс не встановлений."""
+    def is_checkbox_unchecked(self, label: str) -> bool:                   # Перевірити, що чекбокс не встановлений
         selector = self._checkboxes.get(label)
         if not selector:
             raise ValueError(f"Немає чекбоксу з назвою '{label}'")
